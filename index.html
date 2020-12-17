@@ -1,13 +1,94 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style/index.css">
-  <script src="src/index.js" defer></script>
+  <script type="module" src="src/index.mjs" defer></script>
   <title>weather app</title>
 </head>
+
 <body>
-  
+  <div class="wrapper">
+    <section>
+      <h1>weather app</h1>
+      <div class="temperature">
+        26
+        <i class="icon-celsius"></i>
+      </div>
+      <div class="location">
+        <div class="location-name">London</div>
+        <div class="time">
+          10:36 - Tuesday, 22 Oct '19
+        </div>
+      </div>
+      <div>
+        <i class="weather-icon icon-weather"><i>
+            <span class="weather-state">Sunny</span>
+      </div>
+    </section>
+    <section>
+      <label for="search">
+        <input type="text" id="search" class="search" placeholder="Another location" autocomplete="off">
+        <button type="submit" class="search-btn">
+          <i class="icon-search">클릭<i>
+        </button>
+      </label>
+      <ul class="history">
+        <!-- <li>Birmingham</li>
+        <li>Manchester</li>
+        <li>New York</li>
+        <li>California</li> -->
+      </ul>
+      <h2>Weather Details</h2>
+      <ul class="weather-detail">
+        <!-- <li>
+          <div>Cloudy</div>
+          <div>12%</div>
+        </li>
+        <li>
+          <div>Humidity</div>
+          <div>78%</div>
+        </li>
+        <li>
+          <div>Wind</div>
+          <div>1km/h</div>
+        </li>
+        <li>
+          <div>Rain</div>
+          <div>0mm</div>
+        </li> -->
+      </ul>
+      <h2>Next Days</h2>
+      <ul class="weather-week">
+        <!-- <li>
+          <div>Tue</div>
+          <div>구름</div>
+        </li>
+        <li>
+          <div>Wed</div>
+          <div>써니</div>
+        </li>
+        <li>
+          <div>Thu</div>
+          <div>구름</div>
+        </li>
+        <li>
+          <div>Fri</div>
+          <div>레인</div>
+        </li>
+        <li>
+          <div>Sat</div>
+          <div>레인</div>
+        </li>
+        <li>
+          <div>Sun</div>
+          <div>구름</div>
+        </li> -->
+      </ul>
+    </section>
+  </div>
 </body>
+
 </html>
