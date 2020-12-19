@@ -10,6 +10,8 @@ const getWeatherByCityName = async (city) => {
   return data;
 };
 
+getWeatherByCityName("seoul");
+
 const getWeatherWeek = async (lat, lon) => {
   const response = await fetch(
     `${BASE_URL}/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
@@ -18,3 +20,5 @@ const getWeatherWeek = async (lat, lon) => {
   console.log("weeeeeek~", data);
   return data;
 };
+
+getWeatherWeek(37, 127);

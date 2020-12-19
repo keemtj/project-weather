@@ -1,5 +1,6 @@
 /* css */
 @import 'reset.css';
+@import 'fontello.css';
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap');
 
 body {
@@ -60,6 +61,7 @@ h1 {
 .section-right {
   height: 100%;
   width: 30vw;
+  min-width: 414px;
   padding: 5rem 2rem;
   color: #ced4da;
   font-weight: 500;
