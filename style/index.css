@@ -89,15 +89,15 @@ h1 {
   border: none;
   border-bottom: 1px solid #ced4da;
   padding-bottom: 0.5rem;
-  font-size: 1.2rem;
   width: 70%;
   outline: none;
-  color: inherit;
+  color: white;
+  font-size: 1.2rem;
   font-weight: 500;
 }
 
 .search-input::placeholder {
-  color: inherit;
+  color: #ced4da;
 }
 
 .search-btn {
@@ -112,8 +112,8 @@ h1 {
   outline: none;
 }
 
-.search-btn:active > .icon-search {
-  transform: scale(0.9);
+.search-btn:hover > .icon-search {
+  transform: scale(1.1);
   transition: all 0.2s;
 }
 
@@ -127,17 +127,38 @@ h1 {
   padding: 1.5rem 0rem;
 }
 
-.history :nth-child(n) {
+.history > :nth-child(n) {
   padding: 1.5rem 0rem;
 }
 
-.history>li {
+.history > li {
+  display: flex;
+  justify-content: space-between;
   transition: all 0.2s;
 }
 
-.history>li:hover {
+.history > li:hover {
   color: white;
   cursor: pointer;
+}
+
+.remove-history {
+  opacity: 0;
+  border: none;
+  background: transparent;
+  color: #ced4da;
+  font-size: 1rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  outline: none;
+}
+
+.history > li:hover .remove-history {
+  opacity: 1;
+}
+
+.remove-history:hover {
+  color: white;  
 }
 
 .weather-detail {
@@ -174,11 +195,12 @@ h2 {
 }
 
 .weather-week {
-  padding-bottom: 3.5rem;
+  padding-bottom: 2rem;
 }
 
 .copyright {
   text-align: right;
+  padding: 0.2rem;
 }
 
 @media (max-width: 414px) {
