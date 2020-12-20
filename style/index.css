@@ -1,6 +1,5 @@
 /* css */
 @import 'reset.css';
-@import 'fontello.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap');
 
@@ -33,7 +32,7 @@ h1 {
   align-items: center;
 }
 
-.weather-today> :nth-child(n) {
+.weather-today > :nth-child(n) {
   padding-right: 1rem;
 }
 
