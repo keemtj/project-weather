@@ -40,11 +40,8 @@ h1 {
   font-size: 10rem;
 }
 
-.location {
-  margin-top: 0.5rem;
-}
-
 .location-name {
+  margin-top: 0.5rem;
   font-size: 5rem;
   text-transform: capitalize;
 }
@@ -55,8 +52,19 @@ h1 {
   font-size: 1.5rem;
 }
 
+.weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon-weather {
+  margin-top: 1rem;
+  font-size: 4rem;
+}
+
 .weather-state {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   font-size: 1.5rem;
 }
 
@@ -102,6 +110,12 @@ h1 {
   height: 7rem;
   cursor: pointer;
   outline: none;
+}
+
+.icon-search {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid blue;
 }
 
 .history {
