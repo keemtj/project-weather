@@ -32,7 +32,7 @@ h1 {
   align-items: center;
 }
 
-.weather-today > :nth-child(n) {
+.weather-today> :nth-child(n) {
   padding-right: 1rem;
 }
 
@@ -112,7 +112,7 @@ h1 {
   outline: none;
 }
 
-.search-btn:hover > .icon-search {
+.search-btn:hover>.icon-search {
   transform: scale(1.1);
   transition: all 0.2s;
 }
@@ -127,17 +127,17 @@ h1 {
   padding: 1.5rem 0rem;
 }
 
-.history > :nth-child(n) {
+.history> :nth-child(n) {
   padding: 1.5rem 0rem;
 }
 
-.history > li {
+.history>li {
   display: flex;
   justify-content: space-between;
   transition: all 0.2s;
 }
 
-.history > li:hover {
+.history>li:hover {
   color: white;
   cursor: pointer;
 }
@@ -153,12 +153,12 @@ h1 {
   outline: none;
 }
 
-.history > li:hover .remove-history {
+.history>li:hover .remove-history {
   opacity: 1;
 }
 
 .remove-history:hover {
-  color: white;  
+  color: white;
 }
 
 .weather-detail {
@@ -235,9 +235,11 @@ h2 {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .temperature {
     font-size: 4rem;
   }
+
   .location-name {
     font-size: 3rem;
   }
@@ -245,9 +247,11 @@ h2 {
   .clock {
     display: none;
   }
+
   .weather-state {
     font-size: 2.5rem;
   }
+
   .section-right {
     padding: 2rem;
     width: 100%;
@@ -255,7 +259,7 @@ h2 {
     font-weight: 500;
     backdrop-filter: blur(5rem);
   }
-  
+
   .search-btn {
     width: 4rem;
     height: 4rem;

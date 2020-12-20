@@ -1,10 +1,13 @@
 // DOMs
 const weatherToday = document.querySelector(".weather-today");
+const form = document.querySelector("form");
+const searchInput = document.querySelector(".search-input");
+const histories = document.querySelectorAll(".history > li");
+const removeBtns = document.querySelectorAll(".remove-history");
 
 // variable
 const API_KEY = "bbcad54aeb4d627c3798f0773d883830";
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
-
 let data = [];
 const weatherIcon = [
   "fas fa-cloud",
@@ -32,6 +35,7 @@ const month = [
   "Nov",
   "Dec",
 ];
+const historyStack = [];
 
 const getTime = () => {
   const time = new Date();
@@ -45,7 +49,7 @@ const getTime = () => {
   const clock = document.querySelector(".clock");
   clock.innerHTML = `${hours}:${
     mins < 10 ? "0" + mins : mins
-  } ${day} ${date} ${moon}`;
+  } ${day} ${date} ${moon} (KR)`;
   return { hours, mins, day, date, moon, sec };
 };
 
@@ -61,7 +65,7 @@ const render = (city) => {
     <div>
       <div class="location-name">${city}</div>
       <div class="clock">
-      ${hours}:${mins < 10 ? "0" + mins : mins} ${day} ${date} ${moon}
+        ${hours}:${mins < 10 ? "0" + mins : mins} ${day} ${date} ${moon} (KR)
       </div>
     </div>
     <div class="weather">
@@ -74,6 +78,7 @@ const render = (city) => {
 };
 
 const getWeatherByCityName = async (city = "seoul") => {
+  console.log("FETCH:", city);
   console.log("11111");
   const response = await fetch(
     `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`
@@ -92,10 +97,35 @@ const getWeatherByCityName = async (city = "seoul") => {
 //   return data;
 // };
 
-const init = async () => {
+const searchLocation = (e) => {
+  console.log("search location");
+  e.preventDefault();
+  console.log(searchInput.value);
+  getWeatherByCityName(searchInput.value);
+};
+
+const searchHistory = (e) => {
+  if (e.target.matches(".remove-history") || e.target.matches("i")) return;
+  console.log("search history");
+  getWeatherByCityName(e.target.textContent);
+};
+
+const removeHistory = () => {
+  console.log("remove history");
+};
+
+const init = () => {
   console.log("00000");
   getWeatherByCityName();
   setInterval(getTime, 1000);
 };
 
-init();
+// event
+window.addEventListener("load", init);
+form.addEventListener("submit", searchLocation);
+[...histories].forEach((history) =>
+  history.addEventListener("click", searchHistory)
+);
+[...removeBtns].forEach((button) =>
+  button.addEventListener("click", removeHistory)
+);
