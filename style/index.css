@@ -45,11 +45,13 @@ h1 {
 }
 
 .location-name {
-  font-size: 4rem;
+  font-size: 5rem;
+  text-transform: capitalize;
 }
 
-.time {
+.clock {
   margin-top: 0.5rem;
+  margin-left: 0.3rem;
   font-size: 1.5rem;
 }
 
@@ -199,7 +201,7 @@ h2 {
     font-size: 3rem;
   }
 
-  .time {
+  .clock {
     display: none;
   }
   .weather-state {
