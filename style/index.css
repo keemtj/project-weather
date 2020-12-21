@@ -15,8 +15,8 @@ body {
 }
 
 .section-left {
-  width: 70vw;
-  padding: 5rem 5rem 8rem 8rem;
+  width: 75vw;
+  padding: 5rem 0rem 5rem 5rem;
   display: flex;
   flex-direction: column;
   color: #fff;
@@ -70,8 +70,7 @@ h1 {
 
 .section-right {
   height: 100%;
-  width: 30vw;
-  min-width: 414px;
+  width: 25vw;
   padding: 5rem 2rem;
   color: #ced4da;
   font-weight: 500;
@@ -89,7 +88,7 @@ h1 {
   border: none;
   border-bottom: 1px solid #ced4da;
   padding-bottom: 0.5rem;
-  width: 70%;
+  width: 65%;
   outline: none;
   color: white;
   font-size: 1.2rem;

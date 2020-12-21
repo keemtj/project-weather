@@ -1,9 +1,9 @@
+/* eslint-disable no-use-before-define */
 // DOMs
 const weatherToday = document.querySelector(".weather-today");
 const form = document.querySelector("form");
 const searchInput = document.querySelector(".search-input");
-const histories = document.querySelectorAll(".history > li");
-const removeBtns = document.querySelectorAll(".remove-history");
+const histories = document.querySelector(".history");
 
 // variable
 const API_KEY = "bbcad54aeb4d627c3798f0773d883830";
@@ -35,7 +35,7 @@ const month = [
   "Nov",
   "Dec",
 ];
-const historyStack = [];
+const historyStack = ["Seoul", "New York", "California", "London"];
 
 const getTime = () => {
   const time = new Date();
@@ -53,8 +53,69 @@ const getTime = () => {
   return { hours, mins, day, date, moon, sec };
 };
 
+const removeHistory = () => {
+  console.log("remove history");
+};
+
+const searchLocation = (e) => {
+  console.log("search location");
+  e.preventDefault();
+  const { value } = searchInput;
+  getWeatherByCityName(value);
+  manageSearchHistory(value);
+};
+
+const searchHistory = (e) => {
+  if (e.target.matches(".remove-history") || e.target.matches("i")) return;
+  console.log("search history");
+  const value = e.target.textContent;
+  getWeatherByCityName(value);
+  manageSearchHistory(value);
+};
+
+const manageSearchHistory = (city) => {
+  // 최대 10개까지 저장
+  // 중복된 검색이면 찾아서 지우고, 맨 마지막으로 push
+  historyStack.unshift(city);
+  if (historyStack.length > 10) {
+    historyStack.pop();
+  }
+  renderHistory();
+};
+
+// const renderWeek = () => {
+//   console.log("render weather week");
+// };
+
+// const renderDetail = () => {
+//   console.log("render detail");
+// };
+
+const renderHistory = () => {
+  console.log("render History");
+  let html = "";
+
+  historyStack.forEach((stack) => {
+    html += `
+    <li>
+      <div>${stack}</div>
+      <button class="remove-history">
+        <i class="fas fa-times"></i>
+      </button>
+    </li>
+    `;
+  });
+  histories.innerHTML = html;
+  [...histories.childNodes].forEach((history) =>
+    history.addEventListener("click", searchHistory)
+  );
+  const removeBtns = document.querySelectorAll(".remove-history");
+  [...removeBtns].forEach((button) =>
+    button.addEventListener("click", removeHistory)
+  );
+};
+
 const render = (city) => {
-  console.log("22222");
   const { temp } = data.main;
   const [{ main }] = data.weather;
   const { hours, mins, day, date, moon } = getTime();
@@ -78,8 +139,6 @@ const render = (city) => {
 };
 
 const getWeatherByCityName = async (city = "seoul") => {
-  console.log("FETCH:", city);
-  console.log("11111");
   const response = await fetch(
     `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`
   );
@@ -97,35 +156,12 @@ const getWeatherByCityName = async (city = "seoul") => {
 //   return data;
 // };
 
-const searchLocation = (e) => {
-  console.log("search location");
-  e.preventDefault();
-  console.log(searchInput.value);
-  getWeatherByCityName(searchInput.value);
-};
-
-const searchHistory = (e) => {
-  if (e.target.matches(".remove-history") || e.target.matches("i")) return;
-  console.log("search history");
-  getWeatherByCityName(e.target.textContent);
-};
-
-const removeHistory = () => {
-  console.log("remove history");
-};
-
 const init = () => {
-  console.log("00000");
   getWeatherByCityName();
   setInterval(getTime, 1000);
+  renderHistory();
 };
 
 // event
 window.addEventListener("load", init);
 form.addEventListener("submit", searchLocation);
-[...histories].forEach((history) =>
-  history.addEventListener("click", searchHistory)
-);
-[...removeBtns].forEach((button) =>
-  button.addEventListener("click", removeHistory)
-);
