@@ -35,7 +35,12 @@ const month = [
   "Nov",
   "Dec",
 ];
-const historyStack = ["Seoul", "New York", "California", "London"];
+let historyStack = [
+  { id: 0, city: "Seoul" },
+  { id: 1, city: "New York" },
+  { id: 2, city: "California" },
+  { id: 3, city: "London" },
+].reverse();
 
 const getTime = () => {
   const time = new Date();
@@ -53,7 +58,8 @@ const getTime = () => {
   return { hours, mins, day, date, moon, sec };
 };
 
-const removeHistory = () => {
+const removeHistory = (e) => {
+  if (e.target.matches(".history > li")) return;
   console.log("remove history");
 };
 
@@ -73,10 +79,16 @@ const searchHistory = (e) => {
   manageSearchHistory(value);
 };
 
+// eslint-disable-next-line no-confusing-arrow
+const nextId = () =>
+  historyStack.length
+    ? Math.max(...historyStack.map((stack) => stack.id)) + 1
+    : 1;
+
 const manageSearchHistory = (city) => {
   // 최대 10개까지 저장
   // 중복된 검색이면 찾아서 지우고, 맨 마지막으로 push
-  historyStack.unshift(city);
+  historyStack.unshift({ id: nextId(), city });
   if (historyStack.length > 10) {
     historyStack.pop();
   }
@@ -94,11 +106,10 @@ const manageSearchHistory = (city) => {
 const renderHistory = () => {
   console.log("render History");
   let html = "";
-
-  historyStack.forEach((stack) => {
+  historyStack.slice(0, 4).forEach((stack) => {
     html += `
     <li>
-      <div>${stack}</div>
+      <div>${stack.city}</div>
       <button class="remove-history">
         <i class="fas fa-times"></i>
       </button>
@@ -113,6 +124,7 @@ const renderHistory = () => {
   [...removeBtns].forEach((button) =>
     button.addEventListener("click", removeHistory)
   );
+  console.log(historyStack);
 };
 
 const render = (city) => {
