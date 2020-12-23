@@ -4,6 +4,8 @@ const weatherToday = document.querySelector(".weather-today");
 const form = document.querySelector("form");
 const searchInput = document.querySelector(".search-input");
 const histories = document.querySelector(".history");
+const weatherDetail = document.querySelector(".detail-state");
+const weatherWeek = document.querySelector(".week-state");
 
 // variable
 const API_KEY = "bbcad54aeb4d627c3798f0773d883830";
@@ -87,9 +89,30 @@ const manageSearchHistory = (city) => {
 //   console.log("render weather week");
 // };
 
-// const renderDetail = () => {
-//   console.log("render detail");
-// };
+const renderDetail = () => {
+  const { all } = data.clouds;
+  const { humidity } = data.main;
+  const { speed } = data.wind;
+  const html = `
+    <li class="item">
+      <div>Cloudy</div>
+      <div>${all}%</div>
+    </li>
+    <li class="item">
+      <div>Humidity</div>
+      <div>${humidity}%</div>
+    </li>
+    <li class="item">
+      <div>Wind</div>
+      <div>${speed}km/h</div>
+    </li>
+    <li class="item">
+      <div>Rain</div>
+      <div>${data.rain?.["1h"] ?? 0}mm</div>
+    </li> 
+  `;
+  weatherDetail.innerHTML = html;
+};
 
 const renderHistory = () => {
   console.log("render History");
@@ -131,9 +154,8 @@ const getIconByWeatherId = (id) => {
 const render = (city) => {
   const { temp } = data.main;
   const [{ id, main }] = data.weather;
-  console.log(id, getIconByWeatherId(id));
   const { hours, mins, day, date, moon } = getTime();
-  weatherToday.innerHTML = `
+  const html = `
     <div class="temperature">
       ${Math.round(temp)}°
     </div>
@@ -145,9 +167,12 @@ const render = (city) => {
     </div>
     <div class="weather">
       <i class="${getIconByWeatherId(id)} icon-weather"></i>
-      <div class="weather-state">${main}</div>
+      <div class="weather-state">${
+        main !== "Thunderstorm" ? main : "Thunder"
+      }</div>
     </div>
   `;
+  weatherToday.innerHTML = html;
 };
 
 const getWeatherByCityName = async (city = "seoul") => {
@@ -157,6 +182,9 @@ const getWeatherByCityName = async (city = "seoul") => {
   const result = await response.json();
   data = await result;
   render(city);
+  renderHistory();
+  renderDetail();
+  // renderWeek();
 };
 
 // const getWeatherWeek = async (lat, lon) => {
@@ -171,7 +199,6 @@ const getWeatherByCityName = async (city = "seoul") => {
 const init = () => {
   getWeatherByCityName();
   setInterval(getTime, 1000);
-  renderHistory();
 };
 
 // event
