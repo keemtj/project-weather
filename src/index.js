@@ -9,17 +9,6 @@ const histories = document.querySelector(".history");
 const API_KEY = "bbcad54aeb4d627c3798f0773d883830";
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 let data = [];
-const weatherIcon = [
-  "fas fa-cloud",
-  "fas fa-smog",
-  "fas fa-wind",
-  "fas fa-sun",
-  "fas fa-cloud-sun",
-  "fas fa-cloud-sun-rain",
-  "fas fa-cloud-rain",
-  "fas fa-cloud-showers-heavy",
-  "fas fa-snowflake",
-];
 const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const month = [
   "Jan",
@@ -54,7 +43,7 @@ const getTime = () => {
   const clock = document.querySelector(".clock");
   clock.innerHTML = `${hours}:${
     mins < 10 ? "0" + mins : mins
-  } ${day} ${date} ${moon} (KR)`;
+  } ${day} ${date} ${moon}`;
   return { hours, mins, day, date, moon, sec };
 };
 
@@ -87,7 +76,6 @@ const nextId = () =>
 
 const manageSearchHistory = (city) => {
   // 최대 10개까지 저장
-  // 중복된 검색이면 찾아서 지우고, 맨 마지막으로 push
   historyStack.unshift({ id: nextId(), city });
   if (historyStack.length > 10) {
     historyStack.pop();
@@ -127,9 +115,38 @@ const renderHistory = () => {
   console.log(historyStack);
 };
 
+const getIconByWeatherId = (id) => {
+  switch (true) {
+    case id >= 200 && id <= 232:
+      return "fas fa-bolt";
+    case id >= 301 && id <= 321:
+      return "fas fa-cloud-rain";
+    case id >= 500 && id <= 504:
+      return "fas fa-cloud-sun-rain";
+    case id >= 511 && id <= 531:
+      return "fas fa-cloud-showers-heavy";
+    case id === 511:
+    case id >= 600 && id <= 622:
+      return "fas fa-snowflake";
+    case id >= 701 && id <= 781:
+      return "fas fa-smog";
+    case id === 800:
+      return "fas fa-sun";
+    case id === 801:
+      return "fas fa-cloud-sun";
+    case id === 802:
+    case id === 803:
+    case id === 804:
+      return "fas fa-cloud";
+    default:
+      return null;
+  }
+};
+
 const render = (city) => {
   const { temp } = data.main;
-  const [{ main }] = data.weather;
+  const [{ id, main }] = data.weather;
+  console.log(id, getIconByWeatherId(id));
   const { hours, mins, day, date, moon } = getTime();
   weatherToday.innerHTML = `
     <div class="temperature">
@@ -138,13 +155,11 @@ const render = (city) => {
     <div>
       <div class="location-name">${city}</div>
       <div class="clock">
-        ${hours}:${mins < 10 ? "0" + mins : mins} ${day} ${date} ${moon} (KR)
+        ${hours}:${mins < 10 ? "0" + mins : mins} ${day} ${date} ${moon}
       </div>
     </div>
     <div class="weather">
-      <i class="${
-        weatherIcon[Math.floor(Math.random() * 10) % weatherIcon.length]
-      } icon-weather"></i>
+      <i class="${getIconByWeatherId(id)} icon-weather"></i>
       <div class="weather-state">${main}</div>
     </div>
   `;
