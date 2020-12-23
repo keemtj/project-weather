@@ -116,31 +116,16 @@ const renderHistory = () => {
 };
 
 const getIconByWeatherId = (id) => {
-  switch (true) {
-    case id >= 200 && id <= 232:
-      return "fas fa-bolt";
-    case id >= 301 && id <= 321:
-      return "fas fa-cloud-rain";
-    case id >= 500 && id <= 504:
-      return "fas fa-cloud-sun-rain";
-    case id >= 511 && id <= 531:
-      return "fas fa-cloud-showers-heavy";
-    case id === 511:
-    case id >= 600 && id <= 622:
-      return "fas fa-snowflake";
-    case id >= 701 && id <= 781:
-      return "fas fa-smog";
-    case id === 800:
-      return "fas fa-sun";
-    case id === 801:
-      return "fas fa-cloud-sun";
-    case id === 802:
-    case id === 803:
-    case id === 804:
-      return "fas fa-cloud";
-    default:
-      return null;
-  }
+  if (id >= 200 && id <= 232) return "fas fa-bolt";
+  if (id >= 301 && id <= 321) return "fas fa-cloud-rain";
+  if (id >= 500 && id <= 504) return "fas fa-cloud-sun-rain";
+  if (id >= 511 && id <= 531) return "fas fa-cloud-showers-heavy";
+  if (id === 511) return "fas fa-snowflake";
+  if (id >= 600 && id <= 622) return "fas fa-snowflake";
+  if (id >= 701 && id <= 781) return "fas fa-smog";
+  if (id === 800) return "fas fa-sun";
+  if (id === 801) return "fas fa-cloud-sun";
+  if (id === 802 || id === 803 || id === 804) return "fas fa-cloud";
 };
 
 const render = (city) => {
