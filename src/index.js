@@ -195,9 +195,10 @@ const getWeatherWeek = async (lat = 37, lon = 127) => {
   console.log("weeeeeek~", weekData);
 };
 
-const init = () => {
-  getWeatherByCityName();
-  getWeatherWeek();
+const init = async () => {
+  await getWeatherByCityName();
+  const { lat, lon } = await data.coord;
+  getWeatherWeek(lat, lon);
   setInterval(getTime, 1000);
 };
 
