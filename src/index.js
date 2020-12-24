@@ -10,9 +10,9 @@ const weatherWeek = document.querySelector(".week-state");
 // variable
 const API_KEY = "bbcad54aeb4d627c3798f0773d883830";
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
-let data = [];
-let weekData = [];
-const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+let datas = [];
+let dailyDatas = [];
+const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const month = [
   "Jan",
   "Feb",
@@ -38,7 +38,7 @@ const getTime = () => {
   const time = new Date();
   const hours = time.getHours();
   const mins = time.getMinutes();
-  const day = week[time.getDay()];
+  const day = days[time.getDay()];
   const date = time.getDate();
   const moon = month[time.getMonth()];
   const sec = time.getSeconds();
@@ -86,14 +86,26 @@ const manageSearchHistory = (city) => {
   renderHistory();
 };
 
-const renderWeek = () => {
-  console.log("render weather week");
+const renderDailyWeather = () => {
+  const isDailyData = dailyDatas.map((d) => d.weather[0].main).slice(0, 6);
+  console.log(isDailyData);
+  const today = new Date();
+  let html = "";
+  isDailyData.forEach(
+    (dailyWeather, i) =>
+      (html += `
+        <li class="day">
+          <div>${days[(today.getDay() + i + 1) % 7]}</div>
+          <div>${dailyWeather}</div>
+        </li>`)
+  );
+  weatherWeek.innerHTML = html;
 };
 
 const renderDetail = () => {
-  const { all } = data.clouds;
-  const { humidity } = data.main;
-  const { speed } = data.wind;
+  const { all } = datas.clouds;
+  const { humidity } = datas.main;
+  const { speed } = datas.wind;
   const html = `
     <li class="item">
       <div>Cloudy</div>
@@ -109,7 +121,7 @@ const renderDetail = () => {
     </li>
     <li class="item">
       <div>Rain</div>
-      <div>${data.rain?.["1h"] ?? 0}mm</div>
+      <div>${datas.rain?.["1h"] ?? 0}mm</div>
     </li> 
   `;
   weatherDetail.innerHTML = html;
@@ -153,8 +165,8 @@ const getIconByWeatherId = (id) => {
 };
 
 const render = (city) => {
-  const { temp } = data.main;
-  const [{ id, main }] = data.weather;
+  const { temp } = datas.main;
+  const [{ id, main }] = datas.weather;
   const { hours, mins, day, date, moon } = getTime();
   const html = `
     <div class="temperature">
@@ -181,24 +193,26 @@ const getWeatherByCityName = async (city = "seoul") => {
     `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`
   );
   const result = await response.json();
-  data = await result;
+  datas = await result;
   render(city);
   renderHistory();
   renderDetail();
 };
 
-const getWeatherWeek = async (lat = 37, lon = 127) => {
+const getDailyWeatherByCoord = async (lat = 37, lon = 127) => {
   const response = await fetch(
     `${BASE_URL}/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
   );
-  weekData = await response.json();
-  console.log("weeeeeek~", weekData);
+  const result = await response.json();
+  dailyDatas = await result.daily;
+  console.log("daily", dailyDatas);
+  renderDailyWeather();
 };
 
 const init = async () => {
   await getWeatherByCityName();
-  const { lat, lon } = await data.coord;
-  getWeatherWeek(lat, lon);
+  const { lat, lon } = await datas.coord;
+  getDailyWeatherByCoord(lat, lon);
   setInterval(getTime, 1000);
 };
 
