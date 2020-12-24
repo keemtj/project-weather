@@ -11,6 +11,7 @@ const weatherWeek = document.querySelector(".week-state");
 const API_KEY = "bbcad54aeb4d627c3798f0773d883830";
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 let data = [];
+let weekData = [];
 const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const month = [
   "Jan",
@@ -85,9 +86,9 @@ const manageSearchHistory = (city) => {
   renderHistory();
 };
 
-// const renderWeek = () => {
-//   console.log("render weather week");
-// };
+const renderWeek = () => {
+  console.log("render weather week");
+};
 
 const renderDetail = () => {
   const { all } = data.clouds;
@@ -184,20 +185,19 @@ const getWeatherByCityName = async (city = "seoul") => {
   render(city);
   renderHistory();
   renderDetail();
-  // renderWeek();
 };
 
-// const getWeatherWeek = async (lat, lon) => {
-//   const response = await fetch(
-//     `${BASE_URL}/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-//   );
-//   const data = await response.json();
-//   console.log("weeeeeek~", data);
-//   return data;
-// };
+const getWeatherWeek = async (lat = 37, lon = 127) => {
+  const response = await fetch(
+    `${BASE_URL}/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+  );
+  weekData = await response.json();
+  console.log("weeeeeek~", weekData);
+};
 
 const init = () => {
   getWeatherByCityName();
+  getWeatherWeek();
   setInterval(getTime, 1000);
 };
 
