@@ -1,9 +1,9 @@
 /* eslint-disable no-use-before-define */
 // DOMs
+const wrapper = document.querySelector(".wrapper");
 const weatherToday = document.querySelector(".weather-today");
 const form = document.querySelector("form");
 const searchInput = document.querySelector(".search-input");
-const search = document.querySelector(".search");
 const histories = document.querySelector(".history");
 const weatherDetail = document.querySelector(".detail-state");
 const weatherWeek = document.querySelector(".week-state");
@@ -49,6 +49,34 @@ const getTime = () => {
     mins < 10 ? "0" + mins : mins
   } ${day} ${date} ${moon}`;
   return { hours, mins, day, date, moon, sec };
+};
+
+const getIconByWeatherId = (id) => {
+  if (id >= 200 && id <= 232) return "fas fa-bolt";
+  if (id >= 301 && id <= 321) return "fas fa-cloud-rain";
+  if (id >= 500 && id <= 504) return "fas fa-cloud-sun-rain";
+  if (id >= 511 && id <= 531) return "fas fa-cloud-showers-heavy";
+  if (id === 511) return "fas fa-snowflake";
+  if (id >= 600 && id <= 622) return "fas fa-snowflake";
+  if (id >= 701 && id <= 781) return "fas fa-smog";
+  if (id === 800) return "fas fa-sun";
+  if (id === 801) return "fas fa-cloud-sun";
+  if (id === 802 || id === 803 || id === 804) return "fas fa-cloud";
+};
+
+const getBackgroundByWeatherId = (id) => {
+  let state = "";
+  if (id >= 200 && id <= 232) state = "thunderstorm";
+  if (id >= 301 && id <= 321) state = "drizzle";
+  if (id >= 500 && id <= 504) state = "rain";
+  if (id >= 511 && id <= 531) state = "rain";
+  if (id === 511) state = "winter";
+  if (id >= 600 && id <= 622) state = "winter";
+  if (id >= 701 && id <= 781) state = "haze";
+  if (id === 800) state = "bluesky";
+  if (id === 801) state = "snatches-of-clouds";
+  if (id === 802 || id === 803 || id === 804) state = "overcast";
+  wrapper.style.background = `linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), no-repeat center/cover url(https://source.unsplash.com/1600x900/?${state})`;
 };
 
 const removeHistory = (e) => {
@@ -155,19 +183,6 @@ const renderHistory = () => {
   console.log(historyStack);
 };
 
-const getIconByWeatherId = (id) => {
-  if (id >= 200 && id <= 232) return "fas fa-bolt";
-  if (id >= 301 && id <= 321) return "fas fa-cloud-rain";
-  if (id >= 500 && id <= 504) return "fas fa-cloud-sun-rain";
-  if (id >= 511 && id <= 531) return "fas fa-cloud-showers-heavy";
-  if (id === 511) return "fas fa-snowflake";
-  if (id >= 600 && id <= 622) return "fas fa-snowflake";
-  if (id >= 701 && id <= 781) return "fas fa-smog";
-  if (id === 800) return "fas fa-sun";
-  if (id === 801) return "fas fa-cloud-sun";
-  if (id === 802 || id === 803 || id === 804) return "fas fa-cloud";
-};
-
 const render = (city) => {
   const { temp } = datas.main;
   const [{ id, main }] = datas.weather;
@@ -190,6 +205,7 @@ const render = (city) => {
     </div>
   `;
   weatherToday.innerHTML = html;
+  getBackgroundByWeatherId(id);
 };
 
 const getWeatherByCityName = async (city = "seoul") => {
