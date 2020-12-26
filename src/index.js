@@ -224,6 +224,7 @@ const render = (city) => {
     </div>
   `;
   weatherToday.innerHTML = html;
+  searchInput.focus();
   getBackgroundByWeatherId(id);
 };
 

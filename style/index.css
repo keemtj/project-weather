@@ -12,7 +12,6 @@ body {
   display: flex;
   width: 100%;
   height: 100vh;
-  /* background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), no-repeat center/cover url(https://source.unsplash.com/1600x900/?snowy); */
 }
 
 .section-left {
@@ -95,10 +94,13 @@ h1 {
   color: #fff;
   font-size: 1.2rem;
   font-weight: 500;
+  font-family: inherit;
 }
 
 .search-input::placeholder {
   color: #ced4da;
+  /* color: #fff */
+  font-family: 'Rubik', sans-serif;
 }
 
 .search-btn {
@@ -149,7 +151,6 @@ h1 {
   font-size: 1.1rem;
   transition: all 0.2s;
   cursor: pointer;
-  
 }
 
 .history>li:hover .remove-history {
@@ -200,9 +201,26 @@ h2 {
 .daily-weather {
   color: #fff
 }
+
 .copyright {
   text-align: right;
   padding: 0.2rem;
+}
+
+.link {
+  color: #ced4da;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.link:visited {
+  color: #ced4da;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #fff;
+  text-decoration: none;
 }
 
 @media (max-width: 414px) {
