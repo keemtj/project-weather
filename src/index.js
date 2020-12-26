@@ -11,6 +11,7 @@ const weatherWeek = document.querySelector(".week-state");
 // variable
 const API_KEY = "bbcad54aeb4d627c3798f0773d883830";
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
+let cityName = "Seoul";
 let datas = [];
 let dailyDatas = [];
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -29,10 +30,10 @@ const month = [
   "Dec",
 ];
 let historyStack = [
-  { id: 0, city: "Seoul" },
+  { id: 0, city: "London" },
   { id: 1, city: "New York" },
   { id: 2, city: "California" },
-  { id: 3, city: "London" },
+  { id: 3, city: "Seoul" },
 ].reverse();
 
 const getTime = () => {
@@ -79,50 +80,69 @@ const getBackgroundByWeatherId = (id) => {
   wrapper.style.background = `linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), no-repeat center/cover url(https://source.unsplash.com/1600x900/?${state})`;
 };
 
-const removeHistory = (e) => {
-  if (e.target.matches(".history > li")) return;
-  console.log("remove history");
-  console.dir(e.target.parentNode.id);
-  historyStack = historyStack.filter(
-    (stack) => stack.id !== +e.target.parentNode.id
-  );
-  renderHistory();
-};
-
-const searchLocation = (e) => {
-  console.log("search location");
-  e.preventDefault();
-  const { value } = searchInput;
-  getWeatherByCityName(value);
-  manageSearchHistory(value);
-};
-
-const searchHistory = (e) => {
-  if (e.target.matches(".remove-history") || e.target.matches("i")) return;
-  console.log("search history");
-  const value = e.target.textContent;
-  getWeatherByCityName(value);
-  manageSearchHistory(value);
-};
-
 // eslint-disable-next-line no-confusing-arrow
 const nextId = () =>
   historyStack.length
     ? Math.max(...historyStack.map((stack) => stack.id)) + 1
     : 1;
 
+const removeHistory = (e) => {
+  if (e.target.matches(".history > li")) return;
+  console.log("remove history");
+  historyStack = historyStack.filter(
+    (stack) => stack.id !== +e.target.parentNode.id
+  );
+  renderHistory();
+};
+
 const manageSearchHistory = (city) => {
-  // 최대 10개까지 저장
+  historyStack = historyStack.filter((stack) => stack.city !== city);
   historyStack.unshift({ id: nextId(), city });
   if (historyStack.length > 10) {
     historyStack.pop();
   }
+  console.log(historyStack);
   renderHistory();
+};
+
+const capitalizeCityName = (city) => {
+  const splitCity = city.split(" ");
+  const capitalize = splitCity
+    .map((word) =>
+      [...word].map((char, i) => (i === 0 ? char.toUpperCase() : char)).join("")
+    )
+    .join(" ");
+  console.log("capitalize~~~~~~city:", capitalize);
+  return capitalize;
+};
+
+const controlToFetchData = (city) => {
+  if (city === cityName) return;
+  cityName = city;
+  manageSearchHistory(city);
+  getWeatherByCityName(city);
+};
+
+const searchLocation = (e) => {
+  console.log("search location");
+  e.preventDefault();
+  const { value } = searchInput;
+  const location = value.trim();
+  if (location === "") return;
+  controlToFetchData(capitalizeCityName(location));
+  e.target.reset();
+};
+
+const searchHistory = (e) => {
+  e.preventDefault();
+  if (e.target.matches(".remove-history") || e.target.matches("i")) return;
+  console.log("search history");
+  const value = e.target.textContent.trim();
+  controlToFetchData(value);
 };
 
 const renderDailyWeather = () => {
   const isDailyData = dailyDatas.map((d) => d.weather[0].main).slice(0, 6);
-  console.log(isDailyData);
   const today = new Date();
   let html = "";
   isDailyData.forEach(
@@ -180,7 +200,6 @@ const renderHistory = () => {
   [...removeBtns].forEach((button) =>
     button.addEventListener("click", removeHistory)
   );
-  console.log(historyStack);
 };
 
 const render = (city) => {
@@ -208,7 +227,7 @@ const render = (city) => {
   getBackgroundByWeatherId(id);
 };
 
-const getWeatherByCityName = async (city = "seoul") => {
+const getWeatherByCityName = async (city = "Seoul") => {
   const response = await fetch(
     `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`
   );
@@ -219,13 +238,12 @@ const getWeatherByCityName = async (city = "seoul") => {
   renderDetail();
 };
 
-const getDailyWeatherByCoord = async (lat = 37, lon = 127) => {
+const getDailyWeatherByCoord = async (lat = 37.57, lon = 126.98) => {
   const response = await fetch(
     `${BASE_URL}/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
   );
   const result = await response.json();
   dailyDatas = await result.daily;
-  console.log("daily", dailyDatas);
   renderDailyWeather();
 };
 
@@ -236,6 +254,7 @@ const init = async () => {
   setInterval(getTime, 1000);
 };
 
+// setInterval(init, 1.8e6);
 // event
 window.addEventListener("load", init);
 form.addEventListener("submit", searchLocation);
