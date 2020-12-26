@@ -71,8 +71,8 @@ const getBackgroundByWeatherId = (id) => {
   if (id >= 301 && id <= 321) state = "drizzle";
   if (id >= 500 && id <= 504) state = "rain";
   if (id >= 511 && id <= 531) state = "rain";
-  if (id === 511) state = "winter";
-  if (id >= 600 && id <= 622) state = "winter";
+  if (id === 511) state = "snowy";
+  if (id >= 600 && id <= 622) state = "snowy";
   if (id >= 701 && id <= 781) state = "haze";
   if (id === 800) state = "bluesky";
   if (id === 801) state = "snatches-of-clouds";
@@ -116,11 +116,13 @@ const capitalizeCityName = (city) => {
   return capitalize;
 };
 
-const controlToFetchData = (city) => {
+const controlToFetchData = async (city) => {
   if (city === cityName) return;
   cityName = city;
   manageSearchHistory(city);
-  getWeatherByCityName(city);
+  await getWeatherByCityName(city);
+  const { lat, lon } = await datas.coord;
+  await getDailyWeatherByCoord(lat, lon);
 };
 
 const searchLocation = (e) => {

@@ -75,7 +75,8 @@ h1 {
   padding: 5rem 2rem;
   color: #ced4da;
   font-weight: 500;
-  backdrop-filter: blur(10rem);
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  backdrop-filter: blur(1.5rem);
   overflow: scroll;
   position: relative;
 }
@@ -98,8 +99,8 @@ h1 {
 }
 
 .search-input::placeholder {
-  color: #ced4da;
-  /* color: #fff */
+  /* color: #ced4da; */
+  color: #fff;
   font-family: 'Rubik', sans-serif;
 }
 
