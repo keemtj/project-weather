@@ -3,6 +3,7 @@
 const weatherToday = document.querySelector(".weather-today");
 const form = document.querySelector("form");
 const searchInput = document.querySelector(".search-input");
+const search = document.querySelector(".search");
 const histories = document.querySelector(".history");
 const weatherDetail = document.querySelector(".detail-state");
 const weatherWeek = document.querySelector(".week-state");
@@ -53,6 +54,11 @@ const getTime = () => {
 const removeHistory = (e) => {
   if (e.target.matches(".history > li")) return;
   console.log("remove history");
+  console.dir(e.target.parentNode.id);
+  historyStack = historyStack.filter(
+    (stack) => stack.id !== +e.target.parentNode.id
+  );
+  renderHistory();
 };
 
 const searchLocation = (e) => {
@@ -96,7 +102,7 @@ const renderDailyWeather = () => {
       (html += `
         <li class="day">
           <div>${days[(today.getDay() + i + 1) % 7]}</div>
-          <div>${dailyWeather}</div>
+          <div class="daily-weather">${dailyWeather}</div>
         </li>`)
   );
   weatherWeek.innerHTML = html;
@@ -132,11 +138,9 @@ const renderHistory = () => {
   let html = "";
   historyStack.slice(0, 4).forEach((stack) => {
     html += `
-    <li>
+    <li id="${stack.id}">
       <div>${stack.city}</div>
-      <button class="remove-history">
-        <i class="fas fa-times"></i>
-      </button>
+      <i class="fas fa-times remove-history"></i>
     </li>
     `;
   });

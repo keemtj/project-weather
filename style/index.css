@@ -5,13 +5,14 @@
 
 body {
   font-family: 'Rubik', sans-serif;
+  position: relative;
 }
 
 .wrapper {
   display: flex;
   width: 100%;
   height: 100vh;
-  background: no-repeat center/cover url(https://source.unsplash.com/1600x900/?weather);
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), no-repeat center/cover url(https://source.unsplash.com/1600x900/?snow);
 }
 
 .section-left {
@@ -91,7 +92,7 @@ h1 {
   padding-bottom: 0.5rem;
   width: 65%;
   outline: none;
-  color: white;
+  color: #fff;
   font-size: 1.2rem;
   font-weight: 500;
 }
@@ -120,7 +121,7 @@ h1 {
 .icon-search {
   display: block;
   font-size: 1.5rem;
-  color: white;
+  color: #fff;
 }
 
 .history {
@@ -138,19 +139,17 @@ h1 {
 }
 
 .history>li:hover {
-  color: white;
+  color: #fff;
   cursor: pointer;
 }
 
 .remove-history {
   opacity: 0;
-  border: none;
-  background: transparent;
   color: #ced4da;
-  font-size: 1rem;
+  font-size: 1.1rem;
   transition: all 0.2s;
   cursor: pointer;
-  outline: none;
+  
 }
 
 .history>li:hover .remove-history {
@@ -158,7 +157,7 @@ h1 {
 }
 
 .remove-history:hover {
-  color: white;
+  color: #fff;
 }
 
 .weather-detail {
@@ -168,7 +167,7 @@ h1 {
 
 h2 {
   padding: 3rem 0rem;
-  color: white;
+  color: #fff;
   font-size: 1.2rem;
 }
 
@@ -186,7 +185,7 @@ h2 {
 }
 
 .item :last-child {
-  color: white;
+  color: #fff;
 }
 
 .item:first-child,
@@ -198,6 +197,9 @@ h2 {
   padding-bottom: 2rem;
 }
 
+.daily-weather {
+  color: #fff
+}
 .copyright {
   text-align: right;
   padding: 0.2rem;
