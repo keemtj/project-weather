@@ -99,14 +99,13 @@ h1 {
 }
 
 .search-input::placeholder {
-  /* color: #ced4da; */
   color: #fff;
   font-family: 'Rubik', sans-serif;
 }
 
 .search-btn {
   border: none;
-  background: orange;
+  background: #b197fc;
   position: absolute;
   top: 0;
   right: 0;
@@ -116,15 +115,16 @@ h1 {
   outline: none;
 }
 
-.search-btn:hover>.icon-search {
-  transform: scale(1.1);
-  transition: all 0.2s;
-}
-
 .icon-search {
   display: block;
   font-size: 1.5rem;
   color: #fff;
+  transition: all 0.2s;
+}
+
+.search-btn:hover>.icon-search,
+.search-btn:focus>.icon-search {
+  transform: scale(1.1);
 }
 
 .history {

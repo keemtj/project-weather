@@ -4,6 +4,7 @@ const wrapper = document.querySelector(".wrapper");
 const weatherToday = document.querySelector(".weather-today");
 const form = document.querySelector("form");
 const searchInput = document.querySelector(".search-input");
+const searchBtn = document.querySelector(".search-btn");
 const histories = document.querySelector(".history");
 const weatherDetail = document.querySelector(".detail-state");
 const weatherWeek = document.querySelector(".week-state");
@@ -261,3 +262,6 @@ const init = async () => {
 // event
 window.addEventListener("load", init);
 form.addEventListener("submit", searchLocation);
+searchBtn.addEventListener("click", () => {
+  searchInput.focus();
+});
