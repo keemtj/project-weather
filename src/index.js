@@ -132,6 +132,7 @@ const searchLocation = (e) => {
   const { value } = searchInput;
   const location = value.trim();
   if (location === "") return;
+  localStorage.setItem("city", location);
   controlToFetchData(capitalizeCityName(location));
   e.target.reset();
 };
