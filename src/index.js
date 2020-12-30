@@ -102,7 +102,6 @@ const manageSearchHistory = (city) => {
   if (historyStack.length > 10) {
     historyStack.pop();
   }
-  console.log(historyStack);
   renderHistory();
 };
 
@@ -118,6 +117,7 @@ const capitalizeCityName = (city) => {
 };
 
 const controlToFetchData = async (city) => {
+  localStorage.setItem("city", JSON.stringify(city));
   if (city === cityName) return;
   cityName = city;
   manageSearchHistory(city);
@@ -132,7 +132,6 @@ const searchLocation = (e) => {
   const { value } = searchInput;
   const location = value.trim();
   if (location === "") return;
-  localStorage.setItem("city", location);
   controlToFetchData(capitalizeCityName(location));
   e.target.reset();
 };
@@ -253,7 +252,7 @@ const getDailyWeatherByCoord = async (lat = 37.57, lon = 126.98) => {
 };
 
 const init = async () => {
-  await getWeatherByCityName();
+  await getWeatherByCityName(JSON.parse(localStorage.getItem("city")));
   const { lat, lon } = await datas.coord;
   getDailyWeatherByCoord(lat, lon);
   setInterval(getTime, 1000);
