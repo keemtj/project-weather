@@ -31,10 +31,10 @@ const month = [
   "Dec",
 ];
 let historyStack = [
-  { id: 0, city: "London" },
-  { id: 1, city: "New York" },
-  { id: 2, city: "California" },
-  { id: 3, city: "Seoul" },
+  // { id: 0, city: "London" },
+  // { id: 1, city: "New York" },
+  // { id: 2, city: "California" },
+  // { id: 3, city: "Seoul" },
 ].reverse();
 
 const getTime = () => {
@@ -105,6 +105,16 @@ const manageSearchHistory = (city) => {
   renderHistory();
 };
 
+const controlToFetchData = async (city) => {
+  if (city === cityName) return;
+  localStorage.setItem("city", JSON.stringify(city));
+  cityName = city;
+  manageSearchHistory(city);
+  await getWeatherByCityName(city);
+  const { lat, lon } = await datas.coord;
+  await getDailyWeatherByCoord(lat, lon);
+};
+
 const capitalizeCityName = (city) => {
   const splitCity = city.split(" ");
   const capitalize = splitCity
@@ -112,18 +122,8 @@ const capitalizeCityName = (city) => {
       [...word].map((char, i) => (i === 0 ? char.toUpperCase() : char)).join("")
     )
     .join(" ");
-  console.log("capitalize~~~~~~city:", capitalize);
+  console.log("capitalize:", capitalize);
   return capitalize;
-};
-
-const controlToFetchData = async (city) => {
-  localStorage.setItem("city", JSON.stringify(city));
-  if (city === cityName) return;
-  cityName = city;
-  manageSearchHistory(city);
-  await getWeatherByCityName(city);
-  const { lat, lon } = await datas.coord;
-  await getDailyWeatherByCoord(lat, lon);
 };
 
 const searchLocation = (e) => {
@@ -252,7 +252,10 @@ const getDailyWeatherByCoord = async (lat = 37.57, lon = 126.98) => {
 };
 
 const init = async () => {
-  await getWeatherByCityName(JSON.parse(localStorage.getItem("city")));
+  cityName = JSON.parse(localStorage.getItem("city")) || "Seoul";
+  historyStack =
+    JSON.parse(localStorage.getItem("history stack"))?.reverse() || [];
+  await getWeatherByCityName(cityName);
   const { lat, lon } = await datas.coord;
   getDailyWeatherByCoord(lat, lon);
   setInterval(getTime, 1000);
