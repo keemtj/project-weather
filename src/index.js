@@ -30,12 +30,7 @@ const month = [
   "Nov",
   "Dec",
 ];
-let historyStack = [
-  // { id: 0, city: "London" },
-  // { id: 1, city: "New York" },
-  // { id: 2, city: "California" },
-  // { id: 3, city: "Seoul" },
-].reverse();
+let historyStack = [];
 
 const getTime = () => {
   const time = new Date();
@@ -85,7 +80,7 @@ const getBackgroundByWeatherId = (id) => {
 const nextId = () =>
   historyStack.length
     ? Math.max(...historyStack.map((stack) => stack.id)) + 1
-    : 1;
+    : 0;
 
 const removeHistory = (e) => {
   if (e.target.matches(".history > li")) return;
@@ -93,6 +88,7 @@ const removeHistory = (e) => {
   historyStack = historyStack.filter(
     (stack) => stack.id !== +e.target.parentNode.id
   );
+  localStorage.setItem("history stack", JSON.stringify(historyStack));
   renderHistory();
 };
 
@@ -102,6 +98,7 @@ const manageSearchHistory = (city) => {
   if (historyStack.length > 10) {
     historyStack.pop();
   }
+  localStorage.setItem("history stack", JSON.stringify(historyStack));
   renderHistory();
 };
 
@@ -253,8 +250,9 @@ const getDailyWeatherByCoord = async (lat = 37.57, lon = 126.98) => {
 
 const init = async () => {
   cityName = JSON.parse(localStorage.getItem("city")) || "Seoul";
-  historyStack =
-    JSON.parse(localStorage.getItem("history stack"))?.reverse() || [];
+  historyStack = JSON.parse(localStorage.getItem("history stack")) || [
+    { id: nextId(), city: cityName },
+  ];
   await getWeatherByCityName(cityName);
   const { lat, lon } = await datas.coord;
   getDailyWeatherByCoord(lat, lon);
