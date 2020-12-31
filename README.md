@@ -8,19 +8,20 @@
 
 <br/>
 
-## 💄 UI Design
+## 💄 UI 템플릿
 
-- [dribble](https://dribbble.com/shots/7767460-Weather-App-Website)의 템플릿을 참고하여 작업
+<img width="640" alt="스크린샷 2020-12-31 15 55 07" src="https://user-images.githubusercontent.com/51189962/103398568-9ef9cc00-4b80-11eb-8d50-10afcb4fe797.png">
+
+- [dribbble](https://dribbble.com/shots/7767460-Weather-App-Website)의 템플릿을 참고하여 작업
 - [Reset CSS](https://meyerweb.com/eric/tools/css/reset/)
 - [Goole Font](https://fonts.google.com/)
 
 <br/>
 
-## 🧑🏻‍💻 Feature
+## 🧑🏻‍💻 주요 기능
 
-검색된 지역의 날씨 상태에 맞게 배경화면을 새롭게 보여주고, 불필요한 API call을 최소한으로 하도록 코드를 작성
-
-(로컬스토리지 작업중)
+- 검색된 지역의 날씨 상태에 맞게 배경화면을 새롭게 보여주고, 불필요한 API call을 최소한으로 하도록 코드를 작성
+- 로컬 스토리지를 통해 새로고침 및 사이트 재접속시 이전 검색결과가 유지되도록 설정
 
 ### 🚧 왼쪽 메인화면
 
@@ -42,10 +43,11 @@
 - 현재 지역의 디테일한 날씨 정보를 표시
 - 주간 날씨 정보를 표시
   > 현재 요일: monday -> Next Days: tue, wed, thu, fri, sat, sun
-- 로컬스토리지에 검색기록을 담아두기 위해 작업중
+- 로컬 스토리지에 현재 날씨가 보여지고 있는 도시 이름과 이전에 검색했던 도시 정보를 저장
+  ㄴ
   <br/>
 
-## 🛠 Tools
+## 🛠 사용 언어
 
 ![HTML5](https://img.shields.io/badge/HTML5-DE4B24?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-026DB4?style=flat-square&logo=css3)
@@ -53,7 +55,7 @@
 
 <br/>
 
-## ↩️ Commit History
+## ↩️ 커밋 히스토리
 
 [커밋 히스토리](https://github.com/keemtj/project-weather/commits?author=keemtj)
 
