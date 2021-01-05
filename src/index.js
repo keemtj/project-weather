@@ -70,7 +70,7 @@ const getBackgroundByWeatherId = (id) => {
   if (id === 511) state = "snowy";
   if (id >= 600 && id <= 622) state = "snowy";
   if (id >= 701 && id <= 781) state = "haze";
-  if (id === 800) state = "bluesky";
+  if (id === 800) state = "sunny";
   if (id === 801) state = "snatches-of-clouds";
   if (id === 802 || id === 803 || id === 804) state = "overcast";
   wrapper.style.background = `linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), no-repeat center/cover url(https://source.unsplash.com/1600x900/?${state})`;
